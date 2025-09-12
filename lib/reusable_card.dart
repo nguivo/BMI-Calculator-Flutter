@@ -5,7 +5,7 @@ class ReusableCard extends StatelessWidget {
 
   final Color bgColor;
   final Widget cardChild;
-  GestureTapCallback? onPress;
+  final GestureTapCallback? onPress;
 
 
   @override
