@@ -18,6 +18,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender = null;
 
+  int height = 184;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +65,50 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             child: ReusableCard(
               bgColor: kActiveCardColor,
-              cardChild: Container(),
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: kIconTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kIconTextStyle,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbColor: Color(0xFFEB1555),
+                      activeTrackColor: Colors.white,
+                      inactiveColor: Color(0xFF8D8E98),
+                      overlayColor: Color(0x29EB1555),
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
+                    ),
+                    child: Slider(
+                        min: 0.0,
+                        max: 300.0,
+                        value: height.toDouble(),
+                        onChanged: (double newValue) {
+                          setState(() {
+                            height =  newValue.round();
+                          });
+                        }
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
