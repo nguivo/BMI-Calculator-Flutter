@@ -18,7 +18,9 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender = null;
 
-  int height = 184;
+  int age = 19;
+  int height = 165;
+  int weight = 55;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class _InputPageState extends State<InputPage> {
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
         titleTextStyle: TextStyle(
-          fontSize: 40,
+          fontSize: 28,
           color: Color(0xFFFFFFFF),
           fontWeight: FontWeight.w700
         ),
@@ -91,7 +93,6 @@ class _InputPageState extends State<InputPage> {
                     data: SliderTheme.of(context).copyWith(
                       thumbColor: Color(0xFFEB1555),
                       activeTrackColor: Colors.white,
-                      inactiveColor: Color(0xFF8D8E98),
                       overlayColor: Color(0x29EB1555),
                       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
                       overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
@@ -100,6 +101,7 @@ class _InputPageState extends State<InputPage> {
                         min: 0.0,
                         max: 300.0,
                         value: height.toDouble(),
+                        inactiveColor: Color(0xFF8D8E98),
                         onChanged: (double newValue) {
                           setState(() {
                             height =  newValue.round();
@@ -118,13 +120,101 @@ class _InputPageState extends State<InputPage> {
                   child:
                   ReusableCard(
                     bgColor: kActiveCardColor,
-                    cardChild: Container(),
+                    cardChild: Column(
+                      children: [
+                        Text(
+                          'WEIGHT',
+                          style: kIconTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              weight.toString(),
+                              style: kNumberTextStyle,
+                            ),
+                            Text(
+                              'kg',
+                              style: kIconTextStyle,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState((){
+                                  weight++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
                     bgColor: kActiveCardColor,
-                    cardChild: Container(),
+                    cardChild: Column(
+                      children: [
+                        Text(
+                          'AGE',
+                          style: kIconTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              age.toString(),
+                              style: kNumberTextStyle,
+                            ),
+                            Text(
+                              'yrs',
+                              style: kIconTextStyle,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState((){
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -135,9 +225,42 @@ class _InputPageState extends State<InputPage> {
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
             height: kBottomContainerHeight,
+            child: Center(
+              child: Text(
+                  'CALCULATE YOUR BMI',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+
+// Custom Widget
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({required this.icon, required this.onPress});
+
+  final IconData icon;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        width: 45.0,
+        height: 45.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+      onPressed: onPress,
     );
   }
 }
